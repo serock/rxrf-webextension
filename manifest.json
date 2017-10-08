@@ -1,0 +1,19 @@
+{
+"manifest_version": 2,
+"name": "rxrf",
+"version": "1.0.0",
+"description": "Filter requests by matching host names against regular expression patterns",
+"permissions": [
+  "webRequest",
+  "webRequestBlocking"
+],
+"background": {
+  "scripts": ["rxrf-bg.js"]
+},
+"applications": {
+  "gecko": {
+    "id": "rxrf@serock.github.io",
+  }
+}
+}
+
