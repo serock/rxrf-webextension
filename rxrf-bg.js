@@ -1,6 +1,6 @@
 "use strict";
 
-var regExps = {
+const regExps = {
   hosts:   new RegExp("^$"),
   tpHosts: new RegExp("^$")
 };
@@ -21,7 +21,7 @@ function beforeRequestListener(details) {
       console.info("[X]: " + url.href);
     }
   } else if (url.protocol == "data:") {
-    console.info("[ ]: " + url.href);
+    //console.info("[ ]: " + url.href);
     return {cancel: false};
   } else {
     console.warn("[X]: " + url.href);
