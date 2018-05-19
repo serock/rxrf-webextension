@@ -5,7 +5,7 @@ const regExps = {
   tpHosts: new RegExp("^$")
 };
 
-function beforeRequestListener(details) {
+function beforeHttpsRequestListener(details) {
   var url;
   try {
     url = new URL(details.url);
@@ -13,22 +13,34 @@ function beforeRequestListener(details) {
     console.error("[X]: " + details.url);
     return {cancel: true};
   }
-  if (url.protocol == "https:") {
-    if (regExps.hosts.test(url.hostname) || regExps.tpHosts.test(url.hostname)) {
-      //console.info(url.hostname);
-      return {cancel: false};
-    } else {
-      console.info("[X]: " + url.href);
-    }
-  } else {
-    console.warn("[X]: " + url.href);
+  if (regExps.hosts.test(url.hostname) || regExps.tpHosts.test(url.hostname)) {
+    //console.info(url.hostname);
+    return {cancel: false};
   }
+  console.info("[X]: " + url.href);
+  return {cancel: true};
+}
+
+function beforeNonHttpsRequestListener(details) {
+  var url;
+  try {
+    url = new URL(details.url);
+  } catch (e) {
+    console.error("[X]: " + details.url);
+    return {cancel: true};
+  }
+  console.warn("[X]: " + url.href);
   return {cancel: true};
 }
 
 browser.webRequest.onBeforeRequest.addListener(
-  beforeRequestListener,
-  {urls: ["<all_urls>"]},
+  beforeHttpsRequestListener,
+  {urls: ["https://*/*"]},
   ["blocking"]
 );
 
+browser.webRequest.onBeforeRequest.addListener(
+  beforeNonHttpsRequestListener,
+  {urls: ["http://*/*","ftp://*/*","file://*/*"]},
+  ["blocking"]
+);
