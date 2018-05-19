@@ -20,9 +20,6 @@ function beforeRequestListener(details) {
     } else {
       console.info("[X]: " + url.href);
     }
-  } else if (url.protocol == "data:") {
-    //console.info("[ ]: " + url.href);
-    return {cancel: false};
   } else {
     console.warn("[X]: " + url.href);
   }
