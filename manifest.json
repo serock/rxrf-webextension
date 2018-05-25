@@ -1,8 +1,8 @@
 {
 "manifest_version": 2,
 "name": "rxrf",
-"version": "4.0.0",
-"description": "Filter requests by matching host names against regular expression patterns",
+"version": "5.0.0",
+"description": "Filter requests by matching host names and path names against regular expression patterns",
 "permissions": [
   "webRequest",
   "webRequestBlocking",
