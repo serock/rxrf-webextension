@@ -1,9 +1,8 @@
 "use strict";
 
-const regExps = {
-  hosts:   new RegExp("^$"),
-  tpHosts: new RegExp("^$")
-};
+const okHost   = new RegExp("^$");
+const okTpHost = new RegExp("^$");
+const badPath  = new RegExp("$");
 
 function beforeHttpsRequestListener(details) {
   var url;
@@ -13,9 +12,10 @@ function beforeHttpsRequestListener(details) {
     console.error("[X]: " + details.url);
     return {cancel: true};
   }
-  if (regExps.hosts.test(url.hostname) || regExps.tpHosts.test(url.hostname)) {
-    //console.info(url.hostname);
-    return {cancel: false};
+  if (okHost.test(url.hostname) || okTpHost.test(url.hostname)) {
+    if (!badPath.test(url.pathname)) {
+      return {cancel: false};
+    }
   }
   console.info("[X]: " + url.href);
   return {cancel: true};
